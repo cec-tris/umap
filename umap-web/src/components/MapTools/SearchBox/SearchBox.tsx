@@ -5,12 +5,18 @@ import { faDirections, faSearch } from '@fortawesome/free-solid-svg-icons';
 import AddressList from '../AddressList/AddressList';
 import { motion } from 'framer-motion';
 import getAddresses from '@/services/addresses';
-import { SearchBoxProps,SearchResult } from '@/types/Types';
-
+import { Infor, SearchBoxProps,SearchResult } from '@/types/Types';
+import LocationInfor from '../LocationInfor/LocationInfor';
+const item = {
+    name: "147 Nguyễn Công Trứ, P4, TP Tuy Hòa, Tỉnh Phú Yên",
+    number: "147",
+    streetName: "Nguyễn Công Trứ",
+    city: "Tuy Hoa",
+    province: "Phu Yen"
+}
 
 const SearchBox: React.FC<SearchBoxProps> = (props) => {
   const [searchValue, setSearchValue] = useState('');
-  const [searchText, setSearchText] = useState("");
   const [listPlace, setListPlace] = useState<SearchResult[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +61,7 @@ const SearchBox: React.FC<SearchBoxProps> = (props) => {
 
       <div className='inline-flex border-0 mt-2 shadow-xl rounded-xl overflow-hidden'>
         <AddressList listPlace={listPlace} />
+        <LocationInfor item={item}/>
       </div>
     </motion.div>
   );

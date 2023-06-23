@@ -6,7 +6,7 @@ import MapView from "@/components/Map/Map"
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
-  const [showDirectionBox, setShowDirectionBox] = useState(true);
+  const [showDirectionBox, setShowDirectionBox] = useState(false);
 
   const handleSearchDirection = () => {
     setShowDirectionBox(true);
@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <div className="relative">
-      <div className="absolute" style={{ zIndex: 10000 }}>
+      {/* <div className="absolute" style={{ zIndex: 10000 }}>
         <AnimatePresence mode='wait'>
           {showDirectionBox &&
             <DirectionBox onDirectionCancel={handleSearchCancel} />
@@ -32,7 +32,8 @@ export default function Home() {
       </div>
       <div className="relative">
         <MapView />
-      </div>
+      </div> */}
+      <SearchBox onSearchDirection={handleSearchDirection}/>
     </div>
   )
 }
