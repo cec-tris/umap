@@ -15,6 +15,13 @@ const item = {
     province: "Phu Yen"
 }
 
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const raw = JSON.stringify({
+  "text": "268 Lý Thường Kiệt, Lý Thường Kiệt, Phường 14, Quận 10"
+});
+
 const SearchBox: React.FC<SearchBoxProps> = (props) => {
   const [searchValue, setSearchValue] = useState('');
   const [listPlace, setListPlace] = useState<SearchResult[]>([]);
@@ -24,10 +31,14 @@ const SearchBox: React.FC<SearchBoxProps> = (props) => {
   };
 
   const handleSearch = async () => {
-    console.log('Đã tìm kiếm:', searchValue);
-    const address = await getAddresses()
-    console.log(address)
-    setListPlace(address)
+
+    fetch("http://localhost:3000/api/session/", {
+      method: 'POST',
+      body: JSON.stringify({
+        'searchText': searchValue
+      })
+    })
+
   };
 
   const handleDirection = () => {

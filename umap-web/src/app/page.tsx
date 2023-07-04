@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <div className="relative">
-      {/* <div className="absolute" style={{ zIndex: 10000 }}>
+      <div className="absolute" style={{ zIndex: 10000 }}>
         <AnimatePresence mode='wait'>
           {showDirectionBox &&
             <DirectionBox onDirectionCancel={handleSearchCancel} />
@@ -32,7 +32,7 @@ export default function Home() {
       </div>
       <div className="relative">
         <MapView />
-      </div> */}
+      </div>
       <SearchBox onSearchDirection={handleSearchDirection}/>
     </div>
   )
