@@ -1,10 +1,11 @@
 "use client";
-import React ,{ useEffect, useState} from "react";
+import React ,{ useEffect, useRef, useState} from "react";
 import L, { popup } from "leaflet";
 import { MapContainer, Marker, TileLayer , ZoomControl, useMapEvents,Popup,useMap} from "react-leaflet";
 import { WMSTileLayer, LayersControl} from 'react-leaflet';
 const { BaseLayer, Overlay } = LayersControl;
 import './map.css';
+
 
 function Event() {
   const map =  useMapEvents({
@@ -54,7 +55,7 @@ function LocationMarkers() {
 }
 
 export default function MapView(){
-    
+    const mapRef=useRef(null)
     const [center, setCenter] = useState({lat:10.879961,lng:106.810877});
     const [zoom, setZoom] = useState(12);
 
@@ -69,6 +70,7 @@ export default function MapView(){
       }else{
         setZoom(response.zoom)
         setCenter(response.center)
+        mapRef.current.flyTo([response.center.lat,response.center.lng], response.zoom)
       }
     }
       fetchData()
@@ -86,8 +88,8 @@ export default function MapView(){
           scrollWheelZoom={true}
           zoomControl = {false} 
           style={{height:"100vh",width:"100vw"}}
+          ref={mapRef}
         >
-      
 
       <LayersControl>
         <BaseLayer checked name="U-MAP">
