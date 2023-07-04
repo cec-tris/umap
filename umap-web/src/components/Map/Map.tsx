@@ -4,7 +4,7 @@ import L, { popup } from "leaflet";
 import { MapContainer, Marker, TileLayer , ZoomControl, useMapEvents,Popup,useMap} from "react-leaflet";
 import { WMSTileLayer, LayersControl} from 'react-leaflet';
 const { BaseLayer, Overlay } = LayersControl;
-import './map.css';
+import './Map.css';
 
 
 function Event() {
