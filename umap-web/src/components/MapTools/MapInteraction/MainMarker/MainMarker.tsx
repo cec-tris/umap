@@ -4,6 +4,9 @@ import { useMapEvents, Marker, Popup, Circle } from "react-leaflet";
 import { PopupInfor } from "@/types/Types";
 import useSWR from "swr"
 import { motion } from 'framer-motion'
+import './MainMarker.css'
+
+
 
 function PopUpData({ data }: { data: PopupInfor }) {
   return (
@@ -65,49 +68,63 @@ function SetPopup({ position, markerRef, setCirclePos }: { position: number[], m
   );
 }
 
-function MainMarker({ mapRef }: { mapRef: any }) {
+function MainMarker({ mapRef, interactMode, setInteractMode }: 
+  { mapRef: any, interactMode:'click'|'filter'|'none', setInteractMode:any }) {
   const [position, setPosition] = useState<any>([]);
   const [circlePos, setCirclePos] = useState<any>([]);
   const markerRef = useRef<any>(null)
-
+  console.log(position)
   useMapEvents({
     click(e) {
       // @ts-ignore
       setPosition([e.latlng.lat, e.latlng.lng]);
       // fly but current zoom
       mapRef.current.flyTo([e.latlng.lat, e.latlng.lng], mapRef.current.getZoom())
+      setInteractMode('click')
     }
   });
 
   const removeMarker = useCallback(() => {
     setPosition([]);
+    setCirclePos([]);
+    setInteractMode('none')
   }, []);
-
 
   return (
     <>
       {
         position.length > 0 &&
-        <Marker
-          ref={markerRef}
-          position={position}
-          eventHandlers={
-            {
-              dblclick() {
-                removeMarker();
+        <div className='marker'>
+          <Marker
+            draggable={interactMode==='filter'?true:false}
+            ref={markerRef}
+            position={position}
+            eventHandlers={
+              {
+                dblclick() {
+                  removeMarker();
+                },
+                dragend(e) {
+                  setPosition([e.target._latlng.lat, e.target._latlng.lng])
+                }
               }
             }
-          }
-        >
-          <SetPopup position={position} markerRef={markerRef} setCirclePos={setCirclePos} />
-          {
-            circlePos.length > 0 &&
-            <Circle
-              center={{ lat: circlePos[0], lng: circlePos[1] }}
-              pathOptions={{ color: 'green' }}
-              radius={10} />
-          }
-        </Marker>
+          >
+            {
+              interactMode === 'click' &&
+              <>
+                <SetPopup position={position} markerRef={markerRef} setCirclePos={setCirclePos} />
+                {
+                  circlePos.length > 0 &&
+                  <Circle
+                    center={{ lat: circlePos[0], lng: circlePos[1] }}
+                    pathOptions={{ color: 'green' }}
+                    radius={10} />
+                }
+              </>
+            }
+            </Marker>
+          </div>
       }
     </>
   );
