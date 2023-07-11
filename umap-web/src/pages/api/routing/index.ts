@@ -13,7 +13,7 @@ export default async function handler(req : NextRoutingRequest, res : any) {
     const { lng1, lat1, lng2, lat2 } = req.query
     const startGeom = `POINT (${lat1} ${lng1})`
     const endGeom = `POINT (${lat2} ${lng2})`
-    const client = new PrismaClient({log: ['query', 'info', 'warn', 'error']})
+    const client = new PrismaClient(/*{log: ['query', 'info', 'warn', 'error']}*/)
     await client.$connect()
     
     let routes : any[] = await client.$queryRawUnsafe(`
@@ -50,7 +50,13 @@ export default async function handler(req : NextRoutingRequest, res : any) {
         ON di.edge = topo.id
         ;
     `)
-    routes = routes.map(r => JSON.parse(r.st_asgeojson).coordinates)
+    routes = routes.map(r => {
+        let coords = JSON.parse(r.st_asgeojson).coordinates
+        coords = coords.map(([lng, lat] : [number, number]) => [lat, lng])
+
+        return coords
+    })
 
     res.json(routes)
 }
+

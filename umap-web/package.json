@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/icons-material": "^5.13.7",
     "@mui/material": "^5.13.5",
     "@prisma/client": "^4.16.1",
     "@quixo3/prisma-session-store": "^3.1.13",

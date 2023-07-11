@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import SearchBox from "@/components/MapTools/SearchBox/SearchBox"
 import DirectionBox from "@/components/MapTools/DirectionBox/DirectionBox"
 import dynamic from "next/dynamic";
@@ -7,6 +7,7 @@ const MapView = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 import { AnimatePresence } from "framer-motion";
 import ContextMenu from "@/components/MapTools/MapInteraction/ContextMenu/ContextMenu";
 import FilterMenu from "@/components/MapTools/MapInteraction/FilterMenu/FilterMenu";
+import RoutingContextProvider from "@/context/RoutingContext"
 
 export default function Home({ views }: { views: number }) {
   const [showDirectionBox, setShowDirectionBox] = useState(false);
@@ -63,6 +64,8 @@ export default function Home({ views }: { views: number }) {
   }, [])
 
   return (
+    <RoutingContextProvider>
+
     <div className="relative">
       <div className="absolute" style={{ zIndex: 10000 }}>
         <AnimatePresence mode='wait'>
@@ -77,10 +80,11 @@ export default function Home({ views }: { views: number }) {
         </AnimatePresence>
       </div>
       <div className="relative">
-        <MapView {...MapviewProps} />
-        <ContextMenu {...ContextMenuProps} />
-        <FilterMenu {...FilterMenuProps} />
+          <MapView {...MapviewProps} />
+        {/* <ContextMenu {...ContextMenuProps} /> */}
+        {/* <FilterMenu {...FilterMenuProps} /> */}
       </div>
     </div>
+    </RoutingContextProvider>
   )
 }

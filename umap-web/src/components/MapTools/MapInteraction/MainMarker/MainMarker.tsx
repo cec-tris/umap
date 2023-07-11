@@ -4,6 +4,7 @@ import { useMapEvents, Marker, Popup, Circle } from "react-leaflet";
 import { PopupInfor } from "@/types/Types";
 import useSWR from "swr"
 import { motion } from 'framer-motion'
+import ContextMenu from "../ContextMenu/ContextMenu";
 import './MainMarker.css'
 
 
@@ -68,20 +69,26 @@ function SetPopup({ position, markerRef, setCirclePos }: { position: number[], m
   );
 }
 
-function MainMarker({ mapRef, interactMode, setInteractMode }: 
-  { mapRef: any, interactMode:'click'|'filter'|'none', setInteractMode:any }) {
+type MainMarkerProps = {
+  mapRef: any, 
+  interactMode: 'click' | 'filter' | 'none', 
+  setInteractMode: any 
+}
+
+
+function MainMarker({ mapRef, interactMode, setInteractMode }: MainMarkerProps) {
   const [position, setPosition] = useState<any>([]);
   const [circlePos, setCirclePos] = useState<any>([]);
   const markerRef = useRef<any>(null)
-  console.log(position)
+
   useMapEvents({
     click(e) {
       // @ts-ignore
       setPosition([e.latlng.lat, e.latlng.lng]);
       // fly but current zoom
-      mapRef.current.flyTo([e.latlng.lat, e.latlng.lng], mapRef.current.getZoom())
+      // mapRef.current.flyTo([e.latlng.lat, e.latlng.lng], mapRef.current.getZoom())
       setInteractMode('click')
-    }
+    } 
   });
 
   const removeMarker = useCallback(() => {
@@ -105,7 +112,12 @@ function MainMarker({ mapRef, interactMode, setInteractMode }:
                   removeMarker();
                 },
                 dragend(e) {
+                  console.log("marker: ", markerRef.current?.position)
                   setPosition([e.target._latlng.lat, e.target._latlng.lng])
+                  // setPosition(markerRef.current?.getLatLng())
+                },
+                contextmenu(event) {
+                  console.log("marker latlng: ", event.latlng)
                 }
               }
             }

@@ -2,9 +2,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import Event from "../MapTools/Event/Event";
 import MainMarker from "../MapTools/MapInteraction/MainMarker/MainMarker";
-import { MapContainer, ZoomControl, WMSTileLayer, LayersControl, useMapEvents } from "react-leaflet";
+import { MapContainer, ZoomControl, WMSTileLayer, LayersControl, useMapEvents, Polyline, LayerGroup } from "react-leaflet";
 import './Map.css';
 import PageLoading from "../ForLoading/PageLoading/PageLoading";
+import DraggableMarker from '@/components/Map/DraggableMarker'
+import PopupMenu from "./PopupMenu";
+import { useRoutingContext } from "@/context/RoutingContext";
+import { LatLng, LatLngExpression } from "leaflet";
 
 const { BaseLayer } = LayersControl;
 
@@ -18,6 +22,8 @@ interface MapViewProps {
 export default function MapView({interactMode, setShowContextMenu, setInteractMode, setShowFilterMenu}: MapViewProps) {
   const mapRef = useRef<any>(null)
   const [view, setView] = useState<any>(false)
+
+  const { source, destination } = useRoutingContext()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,8 +75,15 @@ export default function MapView({interactMode, setShowContextMenu, setInteractMo
             <ZoomControl position="topright" />
             {/* marker for  */}
             <MainMarker mapRef={mapRef} interactMode={interactMode} 
-            setInteractMode={setInteractMode}/>
+            setInteractMode={setInteractMode}/> 
             <Event setShowContextMenu={setShowContextMenu} setShowFilterMenu={setShowFilterMenu}/>
+            {/* <Polyline   
+              positions={[]}
+              pathOptions={{ color: 'red' }}
+            /> */}
+            { source != null && <DraggableMarker markerType="source" latlng={source?.latlng} />}
+            { destination != null && <DraggableMarker markerType="destination" latlng={destination?.latlng} />}
+            <PopupMenu />
           </MapContainer>
       }
     </>
