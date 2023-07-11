@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useCallback, useRef} from "react";
 import SearchBox from "@/components/MapTools/SearchBox/SearchBox"
 import DirectionBox from "@/components/MapTools/DirectionBox/DirectionBox"
 import dynamic from "next/dynamic";
@@ -9,19 +9,28 @@ import ContextMenu from "@/components/MapTools/MapInteraction/ContextMenu/Contex
 import FilterMenu from "@/components/MapTools/MapInteraction/FilterMenu/FilterMenu";
 import RoutingContextProvider from "@/context/RoutingContext"
 
-export default function Home({ views }: { views: number }) {
+export default function Home() {
   const [showDirectionBox, setShowDirectionBox] = useState(false);
   const [showContextMenu, setShowContextMenu] = useState(false);
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [menuPosition, setMenuPosition] = useState<{ top: number, left: number }>({ top: 0, left: 0 });
-  const [interactMode, setInteractMode] = useState<'click' | 'filter' | 'none'>('none')
+  const [interactMode, setInteractMode] = useState<'mainMarkerOff' | 'filter' | 'mainMarkerOn'>('mainMarkerOff');
+  const [mainMarkerPosition, setMainMarkerPosition] = useState<any>([]);
+  const [addressList, setAddressList] = useState<any>([]);
+  const [fetchingFilter, setFetchingFilter] = useState<false|number>(false);
+  const mapRef = useRef<any>(null)
 
   const MapviewProps = {
     interactMode,
     setShowContextMenu,
     setInteractMode,
     setShowFilterMenu,
-  }
+    setMainMarkerPosition,
+    mainMarkerPosition,
+    addressList,
+    mapRef,
+    fetchingFilter,
+  };
 
   const ContextMenuProps = {
     show: showContextMenu,
@@ -30,23 +39,28 @@ export default function Home({ views }: { views: number }) {
     setInteractMode,
     interactMode,
     position: menuPosition
-  }
+  };
 
   const FilterMenuProps = {
     show: showFilterMenu,
     setShow: setShowFilterMenu,
     setInteractMode,
     interactMode,
-    position: menuPosition
-  }
+    position: menuPosition,
+    setAddressList,
+    mainMarkerPosition,
+    mapRef,
+    fetchingFilter,
+    setFetchingFilter,
+  };
 
-  const handleSearchDirection = () => {
+  const handleSearchDirection = useCallback(() => {
     setShowDirectionBox(true);
-  };
+  },[]);
 
-  const handleSearchCancel = () => {
+  const handleSearchCancel = useCallback(() => {
     setShowDirectionBox(false);
-  };
+  },[]);
 
 
   useEffect(() => {
@@ -62,6 +76,7 @@ export default function Home({ views }: { views: number }) {
       window.removeEventListener("contextmenu", handleContextMenu);
     }
   }, [])
+
 
   return (
     <RoutingContextProvider>

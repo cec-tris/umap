@@ -13,16 +13,19 @@ import { LatLng, LatLngExpression } from "leaflet";
 const { BaseLayer } = LayersControl;
 
 interface MapViewProps {
-  interactMode: 'click' | 'filter'|'none',
+  interactMode: 'mainMarkerOff' | 'mainMarkerOn'|'filter',
   setInteractMode: any,
   setShowContextMenu: any,
   setShowFilterMenu: any,
+  setMainMarkerPosition:any,
+  mainMarkerPosition:any,
+  addressList:any,
+  mapRef: any,
+  fetchingFilter:any,
 }
 
-export default function MapView({interactMode, setShowContextMenu, setInteractMode, setShowFilterMenu}: MapViewProps) {
-  const mapRef = useRef<any>(null)
+export default function MapView(props: MapViewProps) {
   const [view, setView] = useState<any>(false)
-
   const { source, destination } = useRoutingContext()
 
   useEffect(() => {
@@ -30,7 +33,6 @@ export default function MapView({interactMode, setShowContextMenu, setInteractMo
       const response = await fetch("http://localhost:3000/api/session/", { method: 'GET' })
         .then(response => response.json())
         .then(result => result)
-      console.log(response)
       if (response.zoom === null || response.center === null) {
         setView({
           center: { lat: 10.879961, lng: 106.810877 },
@@ -46,6 +48,7 @@ export default function MapView({interactMode, setShowContextMenu, setInteractMo
     fetchData()
   }, [])
 
+
   return (
     <>
       {
@@ -60,7 +63,7 @@ export default function MapView({interactMode, setShowContextMenu, setInteractMo
             scrollWheelZoom={true}
             zoomControl={false}
             style={{ height: "100vh", width: "100vw" }}
-            ref={mapRef}
+            ref={props.mapRef}
           >
 
             <LayersControl>
@@ -74,9 +77,10 @@ export default function MapView({interactMode, setShowContextMenu, setInteractMo
 
             <ZoomControl position="topright" />
             {/* marker for  */}
-            <MainMarker mapRef={mapRef} interactMode={interactMode} 
-            setInteractMode={setInteractMode}/> 
-            <Event setShowContextMenu={setShowContextMenu} setShowFilterMenu={setShowFilterMenu}/>
+            <MainMarker mapRef={props.mapRef} interactMode={props.interactMode} 
+            setInteractMode={props.setInteractMode} setPosition={props.setMainMarkerPosition}
+            position={props.mainMarkerPosition} fetchingFilter={props.fetchingFilter} addressList={props.addressList}/>
+            <Event setShowContextMenu={props.setShowContextMenu} setShowFilterMenu={props.setShowFilterMenu}/>
             {/* <Polyline   
               positions={[]}
               pathOptions={{ color: 'red' }}
