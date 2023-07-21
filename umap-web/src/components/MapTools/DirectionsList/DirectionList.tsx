@@ -10,10 +10,6 @@ import { faArrowAltCircleLeft, faArrowAltCircleRight, faArrowAltCircleUp, faArro
 function DirectionList() {
     const dispatch = useAppDispatch()
     const listItems = useAppSelector(state => state.routing.directionInfor)
-    const number = [1,2,3,4,5,6,7,8,9]
-    const distance = number.reduce((prev: any, curr: any)=>prev+curr, 0)
-<<<<<<< HEAD
-=======
 
     const invertLatLng = ([lng, lat]: [number, number]) : [number, number] => [lat, lng]
 
@@ -26,13 +22,6 @@ function DirectionList() {
       dispatch(routeItemBlurred())
     }
 
-<<<<<<< HEAD
-    const showPopup = (coors: [number, number], content: string) => {
-      dispatch((routeClicked({position: invertLatLng(coors), content})))
-    }
->>>>>>> 158c8b8 (app routing popup, routing color)
-=======
->>>>>>> 7334abb (git add update popup direction on hover)
 
     return (
       <Box sx={{ width: '100%', height: '100%', overflow: 'auto' }}>
@@ -199,4 +188,3 @@ function DirectionList() {
   }
   
   export default DirectionList;
-  

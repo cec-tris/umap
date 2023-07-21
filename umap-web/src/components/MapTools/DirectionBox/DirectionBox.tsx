@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, memo, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDirections, faSearch, faMapMarkerAlt, faCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faDirections, faSearch, faMapMarkerAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import './directionBoxStyle.component.css'
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddressList from '../AddressList/AddressList';
@@ -34,8 +34,6 @@ const DirectionBox: React.FC<DirectionBoxProps> = (props) => {
         const [sourceValue, setSourceValue] = useState<string>('');
 
         const [destinationValue, setDestinationValue] = useState<string>('');
-
-        const [directionLoading, setDirectionLoading] = useState(false);
         
         const handleInputChangeSource = (event: React.ChangeEvent<HTMLInputElement>) => {
             setSourceValue(event.target.value);
