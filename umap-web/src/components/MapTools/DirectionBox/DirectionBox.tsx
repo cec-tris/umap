@@ -14,7 +14,7 @@ import { setDestination, setDirectionInfor, setSource, setState } from '@/redux/
 import getDirection from '@/services/getDirection';
 import { LoadingForSearchBox } from '../SearchBox/SearchBox';
 import DirectionList from '../DirectionsList/DirectionList';
-import { setDirectionState } from '@/redux/slices/loadingSlice';
+import { setDirectionState, setEndPointState, setStartPointState } from '@/redux/slices/loadingSlice';
 
 interface DirectionBoxProps {
     onDirectionCancel: () => void;
@@ -26,14 +26,14 @@ const DirectionBox: React.FC<DirectionBoxProps> = (props) => {
         const destination = useAppSelector(state => state.routing.destination)
         const directionInfor = useAppSelector(state => state.routing.directionInfor)
         const directionState = useAppSelector(state => state.loading.directionState)
+        const startPointState = useAppSelector(state => state.loading.startPointState)
+        const endPointState = useAppSelector(state => state.loading.endPointState)
         
         const dispatch = useAppDispatch()
 
         const [sourceValue, setSourceValue] = useState<string>('');
-        const [sourceSearchLoading, setSourceSearchLoading] = useState(false);
 
         const [destinationValue, setDestinationValue] = useState<string>('');
-        const [destinationSearchLoading, setDestinationSearchLoading] = useState(false);
 
         const [directionLoading, setDirectionLoading] = useState(false);
         
@@ -50,20 +50,20 @@ const DirectionBox: React.FC<DirectionBoxProps> = (props) => {
         };
 
         const handleSearchSource = async () => {
-            setSourceSearchLoading(true)
+            dispatch(setStartPointState(true))
             dispatch(setAddressList(null))
             if(sourceValue !== '')
             {
                 const listAddresses = await getAddresses(sourceValue);
             
-                setSourceSearchLoading(false)
+                dispatch(setStartPointState(false))
                 dispatch(setSelect('list'))
                 dispatch(setAddressList(listAddresses))
                 dispatch(setState('source'))
                 dispatch(setDirectionInfor(null))
             }
             else {
-                setSourceSearchLoading(false)
+                dispatch(setStartPointState(false))
             }
         };
 
@@ -80,13 +80,13 @@ const DirectionBox: React.FC<DirectionBoxProps> = (props) => {
         };
 
         const handleSearchDestination = async () => {
-            setDestinationSearchLoading(true)
+            dispatch(setEndPointState(true))
             dispatch(setAddressList(null))
             if(destinationValue !== '')
             {
                 const listAddresses = await getAddresses(destinationValue);
             
-                setDestinationSearchLoading(false)
+                dispatch(setEndPointState(false))
                 dispatch(setSelect('list'))
                 dispatch(setAddressList(listAddresses))
                 dispatch(setState('destination'))
@@ -94,7 +94,7 @@ const DirectionBox: React.FC<DirectionBoxProps> = (props) => {
             }
             else
             {
-                setDestinationSearchLoading(false)
+                dispatch(setEndPointState(false))
             }
         };
 
@@ -194,7 +194,7 @@ const DirectionBox: React.FC<DirectionBoxProps> = (props) => {
                     onChange={handleInputChangeSource}
                 />
                 {
-                    !sourceSearchLoading ?
+                    !startPointState ?
                     <button 
                         className="group search-button w-[40px] flex justify-center items-center hover:bg-green-400 hover:border-transparent" 
                         onClick={handleSearchSource}
@@ -227,7 +227,7 @@ const DirectionBox: React.FC<DirectionBoxProps> = (props) => {
                     onChange={handleInputChangeDestination}
                 />
                 {
-                    !destinationSearchLoading ?
+                    !endPointState ?
                     <button
                         className="group search-button w-[40px] flex justify-center items-center hover:bg-green-400 hover:border-transparent" 
                         onClick={handleSearchDestination}
