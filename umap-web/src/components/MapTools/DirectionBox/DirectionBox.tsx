@@ -12,7 +12,6 @@ import { setAddressList, setAddress, setSelect } from '@/redux/slices/searchSlic
 import LocationInfor from '../LocationInfor/LocationInfor';
 import { setDestination, setDirectionInfor, setSource, setState } from '@/redux/slices/routingSlice';
 import getDirection from '@/services/getDirection';
-import { SearchResult } from '@/types/Types';
 import { LoadingForSearchBox } from '../SearchBox/SearchBox';
 import DirectionList from '../DirectionsList/DirectionList';
 import { setDirectionState } from '@/redux/slices/loadingSlice';

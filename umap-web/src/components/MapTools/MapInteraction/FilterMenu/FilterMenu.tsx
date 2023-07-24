@@ -19,6 +19,7 @@ interface FilterMenuProps {
     mapRef: any,
     setFetchingFilter: any,
     fetchingFilter: any,
+    setShowFilterList:any,
 }
 
 function FetchFilter(props: any) {
@@ -26,7 +27,6 @@ function FetchFilter(props: any) {
     let [{ data, error, isLoading }, controller]: any = useCancelableSWR(`http://localhost:3000/api/map/getAddresses/fromRadiusOfCoor?lat=${props.mainMarker[0]}&lng=${props.mainMarker[1]}&radius=${props.radius}`, {})
     useEffect(() => {
         return () => {
-            console.log("hi")
             controller.abort();
         }
     }, [props.mainMarker, props.radius, props.mainMarker[0], props.mainMarker[1]])
@@ -37,8 +37,11 @@ function FetchFilter(props: any) {
             filteredAddressList = addressList.filter((address: any) => address.type === props.type)
         else
             filteredAddressList = addressList;
-        props.setAddressList(filteredAddressList);
+        let list_obj = {type:props.type,list:filteredAddressList}
+        props.setAddressList(list_obj);
         props.setFetchingFilter(false);
+        props.setShowFilterList(true);
+        console.log("List object: ",list_obj);
     }
     return <></>
 }
@@ -74,7 +77,8 @@ function FilterMenu(props: FilterMenuProps) {
     return (
         <>
             {props.fetchingFilter && <FetchFilter radius={radius} mainMarker={props.mainMarkerPosition}
-                mapRef={props.mapRef} setAddressList={props.setAddressList} type={type} setFetchingFilter={props.setFetchingFilter} />}
+                mapRef={props.mapRef} setAddressList={props.setAddressList} type={type} setFetchingFilter={props.setFetchingFilter} 
+                setShowFilterList={props.setShowFilterList}/>}
             <motion.div
                 initial={{ scale: 0, opacity: 0.5 }}
                 animate={{ scale: 1, opacity: 1 }}

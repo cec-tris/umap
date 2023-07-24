@@ -15,6 +15,7 @@ dynamic(() => import("bootstrap/dist/js/bootstrap.bundle.min"), { ssr: false });
 import { SearchResult } from "@/types/Types";
 import { StoreProvider } from "@/redux/provider"
 import { useAppSelector } from "@/redux/hooks";
+import FilterListAddresses from "@/components/MapTools/MapInteraction/FiterListAddresses/FilterListAddresses";
 
 //-------------------------------------------------------------------------------------------------------------------
 
@@ -25,8 +26,9 @@ export default function Home() {
   const [menuPosition, setMenuPosition] = useState<{ top: number, left: number }>({ top: 0, left: 0 });
   const [interactMode, setInteractMode] = useState<'mainMarkerOff' | 'filter' | 'mainMarkerOn'>('mainMarkerOff');
   const [mainMarkerPosition, setMainMarkerPosition] = useState<any>([]);
-  const [addressList, setAddressList] = useState<any>([]);
+  const [addressList, setAddressList] = useState<{type:string,list:Array<any>}>({type:'none',list:[]});
   const [fetchingFilter, setFetchingFilter] = useState<false | number>(false);
+  const [showFilterList, setShowFilterList] = useState(true);
   const mapRef = useRef<any>(null)
   // for sourcePoint and destinationPoint
   const { source, destination } = useAppSelector(state => state.routing)
@@ -64,6 +66,13 @@ export default function Home() {
     mapRef,
     fetchingFilter,
     setFetchingFilter,
+    setShowFilterList,
+  };
+
+  const FilterListAddressesProps={
+    addressList,
+    setShowFilterList,
+    showFilterList,
   };
 
   const handleSearchDirection = useCallback(() => {
@@ -82,7 +91,7 @@ export default function Home() {
       setMenuPosition({ top: e.clientY, left: e.clientX });
       setShowContextMenu(true);
       setShowFilterMenu(false);
-      setAddressList([]);
+      setAddressList({type:'none',list:[]});
       if (interactMode !== 'mainMarkerOff')
         setInteractMode('mainMarkerOn');
     }
@@ -137,6 +146,12 @@ export default function Home() {
         {
           showFilterMenu &&
           <FilterMenu {...FilterMenuProps} />
+        }
+      </AnimatePresence>
+      <AnimatePresence mode='wait'>
+        {
+          showFilterList &&
+          <FilterListAddresses {...FilterListAddressesProps}/>
         }
       </AnimatePresence>
     </div>
