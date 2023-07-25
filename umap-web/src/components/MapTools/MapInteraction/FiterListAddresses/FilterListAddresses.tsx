@@ -1,24 +1,34 @@
 import {motion} from 'framer-motion';
 import AddressItem from './AddressItem';
 
+
+
 interface FilterListAddressesProps{
     addressList: {type:string,list:Array<any>},
     showFilterList:boolean,
     setShowFilterList: any,
+    mainMarkerPosition:any,
 }
 
 export default function FilterListAddresses(props:FilterListAddressesProps){
     const closeHandler = ()=>{
         props.setShowFilterList(false);
     }
-    props.addressList.type = "cafe";
-    props.addressList.list = ["Cà phê Yes, làng Đại học","Cà phê Xyz, đường Trần Mạnh Dũng, làng Đại học","Cà phê Xyz, đường Trần Mạnh Dũng, làng Đại học",
-    "Cà phê Yes, làng Đại học","Cà phê Xyz, đường Trần Mạnh Dũng, làng Đại học","Cà phê Xyz, đường Trần Mạnh Dũng, làng Đại học",
-    "Cà phê Yes, làng Đại học","Cà phê Xyz, đường Trần Mạnh Dũng, làng Đại học","Cà phê Xyz, đường Trần Mạnh Dũng, làng Đại học",
-    "Cà phê Yes, làng Đại học","Cà phê Xyz, đường Trần Mạnh Dũng, làng Đại học","Cà phê Xyz, đường Trần Mạnh Dũng, làng Đại học"];
+
+    let type = 'None';
+    switch(props.addressList?.type){
+        case 'none': 
+            type='dịch vụ'; break;
+        case 'cafe':
+            type='quán cà phê'; break;
+        case 'store':
+            type='cửa hàng'; break;
+    }
+
+    console.log("Main marker: ",props.mainMarkerPosition);
 
     return (
-        props.addressList?.list?.length > 0 &&
+        props.showFilterList &&
             <motion.div
                 initial={{ scale: 0, opacity: 0.5 }}
                 animate={{ scale: 1, opacity: 1}}
@@ -27,11 +37,8 @@ export default function FilterListAddresses(props:FilterListAddressesProps){
                 key="filter_address_list"
                 style={{ zIndex: 10001, top: 200, right:0}}
             >
-                <div className="w-80 h-40 bg-white p-1 overflow-scroll h-96">
+                <div className="w-80 bg-white p-1 ">
                     <div className="w-full h-10 bg-white p-1">
-                        {/* <CloseButton style={{float:'right',
-                            backgroundSize:"cover", 
-                            width:"40px", height:"40px"}}></CloseButton> */}
                         <button onClick={closeHandler} type="button" className="hover:bg-neutral-200"
                             aria-label="Close" style={{ float: 'right' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" fill="currentColor" className="bi bi-x " viewBox="0 0 16 16">
@@ -40,12 +47,12 @@ export default function FilterListAddresses(props:FilterListAddressesProps){
                         </button>
                     </div>
                     <div className="text-lg p-2 font-semibold">
-                        Có {props.addressList?.list?.length} {props.addressList?.type} xung quanh:
+                        Có {props.addressList?.list?.length} {type} xung quanh:
                     </div>
-                    <div>
+                    <div className='overflow-scroll max-h-96 w-full bg-white'>
                     {
-                        props.addressList?.list?.map((address:string, index: number) =>
-                            <AddressItem address={address} key={index}/>
+                        props.addressList?.list?.map((address:any, index: number) =>
+                            <AddressItem mainMarker={props.mainMarkerPosition} lat={address.lat} lng={address.lng} address={address.address} key={index}/>
                         )
                     }
                     </div>

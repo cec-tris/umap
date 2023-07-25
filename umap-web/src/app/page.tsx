@@ -28,7 +28,7 @@ export default function Home() {
   const [mainMarkerPosition, setMainMarkerPosition] = useState<any>([]);
   const [addressList, setAddressList] = useState<{type:string,list:Array<any>}>({type:'none',list:[]});
   const [fetchingFilter, setFetchingFilter] = useState<false | number>(false);
-  const [showFilterList, setShowFilterList] = useState(true);
+  const [showFilterList, setShowFilterList] = useState(false);
   const mapRef = useRef<any>(null)
   // for sourcePoint and destinationPoint
   const { source, destination } = useAppSelector(state => state.routing)
@@ -73,6 +73,7 @@ export default function Home() {
     addressList,
     setShowFilterList,
     showFilterList,
+    mainMarkerPosition
   };
 
   const handleSearchDirection = useCallback(() => {

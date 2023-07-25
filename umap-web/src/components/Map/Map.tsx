@@ -92,7 +92,7 @@ export default function MapView(props:MapViewProps) {
             <MainMarker
             mapRef={props.mapRef} interactMode={props.interactMode} 
             setInteractMode={props.setInteractMode} setPosition={props.setMainMarkerPosition}
-            position={props.mainMarkerPosition} fetchingFilter={props.fetchingFilter} addressList={props.addressList.list}/>
+            position={props.mainMarkerPosition} fetchingFilter={props.fetchingFilter} addressList={props.addressList?.list}/>
             {select && item && <MarkerElement mapRef={mapRef} item={item} type="select"/>}
             {source && source!=="readyToSet" && <MarkerElement mapRef={mapRef} item={source} type="source"/>}
             {destination && destination!=="readyToSet" && <MarkerElement mapRef={mapRef} item={destination} type="destination"/>}

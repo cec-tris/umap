@@ -1,7 +1,20 @@
-type AddressItem = {address:string};
+import { setDestination, setDirectionInfor, setSource } from "@/redux/slices/routingSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+
+type AddressItem = {lat:string, lng: string, address:string,mainMarker:any};
 
 export default function AddressItem(props:AddressItem){
-    const handle=()=>{console.log("On click...")};
+    const dispatch = useAppDispatch();
+    const handle=()=>{
+        dispatch(setDestination({
+            address:props.address,
+            center: [props.lat, props.lng]
+        }));
+        dispatch(setSource({
+            address:props.mainMarker,
+            center:[props.mainMarker[0], props.mainMarker[1]]
+        }))
+    };
     return (
         <div className="shadow-md my-1 px-1 ">
             <div>

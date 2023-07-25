@@ -34,7 +34,7 @@ function FetchFilter(props: any) {
         const addressList = data.data;
         let filteredAddressList = null;
         if (props.type !== 'none')
-            filteredAddressList = addressList.filter((address: any) => address.type === props.type)
+            filteredAddressList = addressList.filter((address: any) => address.type === props.type);
         else
             filteredAddressList = addressList;
         let list_obj = {type:props.type,list:filteredAddressList}

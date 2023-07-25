@@ -179,9 +179,6 @@ function MainMarker(props: any) {
   const [destinationMarker, setDestinationMarker] = useState(destination)
 
   useEffect(()=>{
-    // console.log('source: ', source)
-    // console.log('destination: ', destination)
-
     setSourceMarker(source)
     setDestinationMarker(destination)
   }, [source, destination])
