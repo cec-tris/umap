@@ -41,6 +41,15 @@ export default function MapView(props:MapViewProps) {
   const destination = useAppSelector(state => state.routing.destination)
   const directionInfor = useAppSelector(state => state.routing.directionInfor)
 
+  // const directionsInfor = useAppSelector(state => state.routing.directionInfor)
+  // const direction = directionsInfor ? directionsInfor.map(
+  //   (item: any)=> {
+  //     const invertLatLng = ([lng, lat]: [number, number]) => [lat, lng]
+  //     const pathPositions = [item.coors.map((position: any)=> invertLatLng(position))]
+  //     return <Polyline key={item.osm_id} pathOptions={item.hovered ? pathStyle.hover : pathStyle.normal} positions={pathPositions} />
+  //   }
+  // ):null
+
   const mapRef = useRef<any>(null)
   const [view, setView] = useState<any>(false)
 
@@ -106,7 +115,7 @@ export default function MapView(props:MapViewProps) {
             {/* {direction && <Polyline pathOptions={redOptions} positions={direction} />} */}
             {/* {direction} */}
             <RouteList />
-            {directionInfor && <DirectionPopup />}
+            {directionInfor&&<DirectionPopup />}
             <Event/>
           </MapContainer>
       }
