@@ -18,8 +18,8 @@ WORKDIR /app
 COPY --from=BASE /app/node_modules ./node_modules
 COPY . .
 
-RUN apk add --no-cache curl \ 
-  && curl -sf https://gobinaries.com/tj/node-prune | sh -s -- -b /usr/local/bin 
+RUN apk add --no-cache curl  
+RUN curl -sf https://gobinaries.com/tj/node-prune | sh -s -- -b /usr/local/bin 
 #RUN apk del curl
 
 RUN apk add --no-cache git curl \
