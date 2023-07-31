@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN apk add --no-cache git \
     #&& yarn --frozen-lockfile
-    && npm ci
+    && npm install
 RUN npm cache clean --force
 
 # Build Image
