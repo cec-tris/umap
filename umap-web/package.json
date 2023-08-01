@@ -33,6 +33,7 @@
     "i": "^0.3.7",
     "leaflet.awesome-markers": "^2.0.5",
     "next": "13.4.13-canary.6",
+    "next-session": "^4.0.5",
     "node-worker-threads-pool": "^1.5.1",
     "npm": "^9.8.1",
     "postcss": "8.4.27",
