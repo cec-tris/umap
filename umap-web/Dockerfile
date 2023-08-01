@@ -4,9 +4,8 @@ LABEL author="umap"
 
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN apk add --no-cache git \
     #&& yarn --frozen-lockfile
-    && npm install
+RUN npm install
 RUN npm cache clean --force
 
 # Build Image
