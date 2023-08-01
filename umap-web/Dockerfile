@@ -23,6 +23,7 @@ RUN curl -sf https://gobinaries.com/tj/node-prune | sh -s -- -b /usr/local/bin
 #RUN apk del curl
 
 RUN npm run build
+RUN npx prisma generate
 RUN cd .next/standalone && node-prune
 
 # Build production
