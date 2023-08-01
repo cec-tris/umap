@@ -31,6 +31,7 @@ LABEL author="umap"
 
 WORKDIR /app
 
+COPY --from=BUILD /app/prisma ./prisma
 COPY --from=BUILD /app/public ./public
 COPY --from=BUILD /app/next.config.js ./
 
