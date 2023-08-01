@@ -22,10 +22,8 @@ RUN apk add --no-cache curl
 RUN curl -sf https://gobinaries.com/tj/node-prune | sh -s -- -b /usr/local/bin 
 #RUN apk del curl
 
-RUN apk add --no-cache git curl \
-    && npm run build \
-    && cd .next/standalone \
-    && node-prune
+RUN npm run build
+RUN cd .next/standalone && node-prune
 
 # Build production
 FROM node:16-alpine AS PRODUCTION
