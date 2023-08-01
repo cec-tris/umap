@@ -3,7 +3,7 @@ export default async function getAddress(lng: any, lat: any){
     params.append('lng', lng);
     params.append('lat', lat);
 
-    const url = `http://localhost:3000/api/map/getAddress/fromCoor?${params.toString()}`;
+    const url = `/api/map/getAddress/fromCoor?${params.toString()}`;
 
     const response = await fetch(url)
     .then(response => response.json())

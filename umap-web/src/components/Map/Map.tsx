@@ -57,7 +57,7 @@ export default function MapView(props:MapViewProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:3000/api/session/", { method: 'GET' })
+      const response = await fetch("/api/session/", { method: 'GET' })
         .then(response => response.json())
         .then(result => result)
       if (response.zoom === null || response.center === null) {

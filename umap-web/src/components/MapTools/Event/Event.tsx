@@ -7,7 +7,7 @@ export default function Event() {
   useEffect(() => {
     if (readyToSave) {
       let saveFunction = setTimeout(() => {
-        fetch("http://localhost:3000/api/session/", {
+        fetch("/api/session/", {
           method: 'POST',
           body: JSON.stringify({
             'center': event.target.getCenter(),

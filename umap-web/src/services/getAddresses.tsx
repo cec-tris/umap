@@ -13,7 +13,7 @@ export default async function getAddresses(searchValue: string) {
     redirect: 'follow'
   };
 
-  const response = await fetch("http://localhost:3000/api/map/getAddresses/fromText/", requestOptions)
+  const response = await fetch("/api/map/getAddresses/fromText/", requestOptions)
   .then(response => response.json())
   .then(result => result)
   .catch(error => console.log('error', error));

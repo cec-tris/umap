@@ -68,7 +68,7 @@ function PopUpData({ data, mainMarkerPos }: { data: PopupInfor, mainMarkerPos: a
 }
 
 function SetPopup({ position, markerRef, setCirclePos, mapRef }: { mapRef: any, position: number[], markerRef: any, setCirclePos: any }) {
-  // let [{ data, error, isLoading }, controller]:any = useCancelableSWR(`http://localhost:3000/api/map/getAddress/fromCoor?lat=${position[0]}&lng=${position[1]}`, {})
+  // let [{ data, error, isLoading }, controller]:any = useCancelableSWR(`/api/map/getAddress/fromCoor?lat=${position[0]}&lng=${position[1]}`, {})
   const [data, setData] = useState<any>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   
@@ -86,7 +86,7 @@ function SetPopup({ position, markerRef, setCirclePos, mapRef }: { mapRef: any, 
     const fetchData = async () => {
       try {
         setIsLoading(true)
-        const response = await fetch(`http://localhost:3000/api/map/getAddress/fromCoor?lat=${position[0]}&lng=${position[1]}`
+        const response = await fetch(`/api/map/getAddress/fromCoor?lat=${position[0]}&lng=${position[1]}`
           , { signal: signal }).catch(err=>console.log(err));
         const jsonData = await response?.json();
         if (isMounted) {

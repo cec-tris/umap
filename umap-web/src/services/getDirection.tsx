@@ -8,7 +8,7 @@ export default async function getDirection(source: SearchResult, destination: Se
     params.append('lat2', destination.center[0]);
     params.append('mode', mode);
 
-    const url = `http://localhost:3000/api/routing/?${params.toString()}`;
+    const url = `/api/routing/?${params.toString()}`;
 
     const response = await fetch(url)
     .then(response => response.json())
