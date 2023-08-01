@@ -1,7 +1,7 @@
 import { setDestination, setDirectionInfor, setSource } from "@/redux/slices/routingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
-type AddressItem = {lat:string, lng: string, address:string,mainMarker:any};
+type AddressItem = {lat:string, lng: string, address:string,mainMarker:any,setSearch:any};
 
 export default function AddressItem(props:AddressItem){
     const dispatch = useAppDispatch();
@@ -14,15 +14,16 @@ export default function AddressItem(props:AddressItem){
             address:props.mainMarker,
             center:[props.mainMarker[0], props.mainMarker[1]]
         }))
+        props.setSearch(true);
     };
     return (
         <div className="shadow-md my-1 px-1 ">
             <div>
                 {props.address}
             </div>
-            <div className="italic text-lime-500 text-sm hover:cursor-pointer" onClick={handle}>
+            {/* <div className="italic text-lime-500 text-sm hover:cursor-pointer" onClick={handle}>
                 Chỉ đường &#62;&#62;&#62;
-            </div>
+            </div> */}
         </div>
     )
 }

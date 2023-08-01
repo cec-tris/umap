@@ -8,6 +8,7 @@ interface FilterListAddressesProps{
     showFilterList:boolean,
     setShowFilterList: any,
     mainMarkerPosition:any,
+    setShowDirectionBox:any,
 }
 
 export default function FilterListAddresses(props:FilterListAddressesProps){
@@ -52,7 +53,9 @@ export default function FilterListAddresses(props:FilterListAddressesProps){
                     <div className='overflow-scroll max-h-96 w-full bg-white'>
                     {
                         props.addressList?.list?.map((address:any, index: number) =>
-                            <AddressItem mainMarker={props.mainMarkerPosition} lat={address.lat} lng={address.lng} address={address.address} key={index}/>
+                            <AddressItem mainMarker={props.mainMarkerPosition} 
+                            lat={address.lat} lng={address.lng} address={address.address} key={index}
+                            setSearch={props.setShowDirectionBox}/>
                         )
                     }
                     </div>

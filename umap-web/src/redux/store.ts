@@ -1,23 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-<<<<<<< HEAD
-import  routingReducer from "./slices/routingSlice";
-import  searchReducer from "./slices/searchSlice";
-import loadingReducer from "./slices/loadingSlice";
-=======
 import routingReducer from "./slices/routingSlice";
 import searchReducer from "./slices/searchSlice";
 import popupReducer from "./slices/popupSlice"
->>>>>>> 7334abb (git add update popup direction on hover)
+import loadingReducer from "./slices/loadingSlice"
 
 export const store = configureStore({
     reducer: {
         routing: routingReducer,
+        loading: loadingReducer,
         search: searchReducer,
-<<<<<<< HEAD
-        loading: loadingReducer
-=======
         popup: popupReducer
->>>>>>> 7334abb (git add update popup direction on hover)
     }
 })
 

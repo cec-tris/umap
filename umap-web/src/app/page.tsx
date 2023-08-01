@@ -73,7 +73,8 @@ export default function Home() {
     addressList,
     setShowFilterList,
     showFilterList,
-    mainMarkerPosition
+    mainMarkerPosition,
+    setShowDirectionBox,
   };
 
   const handleSearchDirection = useCallback(() => {
